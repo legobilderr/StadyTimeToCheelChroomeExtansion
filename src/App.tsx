@@ -1,10 +1,12 @@
 import "./App.css";
 import SettingForm from "./components/SettingForm";
-
+import { TimerProvider } from "./context/TimerContext";
 function App() {
   return (
     <>
-      <SettingForm />
+      <TimerProvider>
+        <SettingForm />
+      </TimerProvider>
     </>
   );
 }
