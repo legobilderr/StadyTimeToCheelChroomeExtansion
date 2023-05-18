@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Just Translate",
-  "description": "simplify the use of translation",
-  "permissions": ["contextMenus", "tabs", "scripting", "activeTab"],
+  "name": "Time To rest",
+  "description": "Just time to Relax",
+  "permissions": ["contextMenus", "tabs", "scripting", "activeTab", "storage"],
   "version": "1.0",
   "icons": {
     "16": "images/icon-16.png",
@@ -24,5 +24,6 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": "images/icon-32.png"
-  }
+  },
+  "options_page": "options.html"
 }

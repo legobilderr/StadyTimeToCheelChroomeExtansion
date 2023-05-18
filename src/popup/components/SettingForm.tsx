@@ -4,7 +4,7 @@ import { TimerContextType } from "../@types/Timer";
 import TimerContext from "../context/TimerContext";
 import useTimerHook from "../hooks/useTimerHook";
 import RunButton from "./RunButton";
-import TimeZome from "./TimeZome";
+import TimeZone from "./TimeZone";
 
 function SettingForm() {
   const {
@@ -22,11 +22,11 @@ function SettingForm() {
   return (
     <div>
       <form className="" onSubmit={startTimer}>
-        <div className="card w-96 bg-primary text-primary-content">
+        <div className="card w-96 bg-primary text-primary-content rounded-sm">
           <div className="card-body">
             <h2 className="card-title">Set rest Interval</h2>
             <div className=" flex justify-between items-center">
-              <TimeZome />
+              <TimeZone />
               <button className="btn ml-2" onClick={reset}>
                 <FaRedo color="white" fontSize="1.5em" />
               </button>

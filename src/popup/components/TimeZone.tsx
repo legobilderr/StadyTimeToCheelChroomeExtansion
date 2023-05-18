@@ -2,7 +2,7 @@ import { CSSProperties, useContext, useEffect } from "react";
 import { TimerContextType, extendProperties } from "../@types/Timer";
 import TimerContext from "../context/TimerContext";
 
-function TimeZome() {
+function TimeZone() {
   const {
     state: { hours, minutes, seconds },
   } = useContext(TimerContext) as TimerContextType;
@@ -34,4 +34,4 @@ function TimeZome() {
   );
 }
 
-export default TimeZome;
+export default TimeZone;

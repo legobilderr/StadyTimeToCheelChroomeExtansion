@@ -108,7 +108,13 @@ function useTimerHook() {
         });
         clearInterval(timerId as number);
         clearInterval(CurentIntervalId as number);
-        alert("Time to rest my friend");
+        chrome.storage.sync.get(["name"]).then((result) => {
+          if (result?.name) {
+            alert(`Time to rest dear ${result.name}`);
+          } else {
+            alert("Time to rest my friend");
+          }
+        });
       }
     }, 1000);
     return CurentIntervalId;
