@@ -10,6 +10,10 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         nested: resolve(__dirname, "options.html"),
+        background: resolve(__dirname, "src/background/background.ts"),
+      },
+      output: {
+        entryFileNames: "[name].js",
       },
     },
   },

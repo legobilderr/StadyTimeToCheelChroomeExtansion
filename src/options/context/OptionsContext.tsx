@@ -8,6 +8,7 @@ export const OptionProvider = ({ children }: PropsWithChildren) => {
   const options: anyObject = {
     name: "",
   };
+
   const [state, dispatch] = useReducer(optionsReduser, options);
 
   return (

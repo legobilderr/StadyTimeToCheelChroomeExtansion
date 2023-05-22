@@ -35,6 +35,11 @@ function useTimerHook() {
         formObj[key] = value;
       }
 
+      chrome.runtime.sendMessage({
+        action: "SIBMIT_TIMEMR",
+        inputValue: formObj.timer,
+      });
+
       let iputhours = Number(formObj.timer.split(":")[0]) || 0;
       let iputminutes = Number(formObj.timer.split(":")[1]) || 0;
       let formatedTime = format(
@@ -109,7 +114,7 @@ function useTimerHook() {
         clearInterval(timerId as number);
         clearInterval(CurentIntervalId as number);
         chrome.storage.sync.get(["name"]).then((result) => {
-          if (result?.name) {
+          if (result.name) {
             alert(`Time to rest dear ${result.name}`);
           } else {
             alert("Time to rest my friend");

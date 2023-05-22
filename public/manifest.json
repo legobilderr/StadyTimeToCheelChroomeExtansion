@@ -2,7 +2,14 @@
   "manifest_version": 3,
   "name": "Time To rest",
   "description": "Just time to Relax",
-  "permissions": ["contextMenus", "tabs", "scripting", "activeTab", "storage"],
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "scripting",
+    "activeTab",
+    "storage",
+    "alarms"
+  ],
   "version": "1.0",
   "icons": {
     "16": "images/icon-16.png",

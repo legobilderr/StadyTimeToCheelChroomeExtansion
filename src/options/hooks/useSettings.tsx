@@ -17,7 +17,6 @@ function useSettings() {
     for (const [key, value] of formData) {
       formObj[key] = value;
     }
-    console.log(formObj["name"]);
 
     chrome.storage.sync.set({ name: formObj["name"] }).then(() => {
       console.log("Value is set to " + formObj["name"]);
@@ -25,10 +24,6 @@ function useSettings() {
   };
 
   const changeOption = (e: ChangeEvent<HTMLInputElement>) => {
-    chrome.storage.sync.get(["name"]).then((result) => {
-      console.log(result.name);
-    });
-
     dispatch({
       type: "UPDATE_SETTINGS",
       payload: {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { optionsContextType } from "../@types/Options";
 import OptionContext from "../context/OptionsContext";
 import useSettings from "../hooks/useSettings";
@@ -6,6 +6,19 @@ import useSettings from "../hooks/useSettings";
 function MainSettingPage() {
   const { submitSettings, changeOption } = useSettings();
   const { state, dispatch } = useContext(OptionContext) as optionsContextType;
+
+  useEffect(() => {
+    chrome.storage.sync.get(["name"], (result) => {
+      if (result.name) {
+        dispatch({
+          type: "UPDATE_SETTINGS",
+          payload: {
+            name: result.name,
+          },
+        });
+      }
+    });
+  }, []);
   return (
     <>
       <div className=" container mx-auto px-4">
