@@ -1,23 +1,10 @@
-import { useContext, useEffect } from "react";
 import { FaRedo } from "react-icons/fa";
-import { TimerContextType } from "../@types/Timer";
-import TimerContext from "../context/TimerContext";
 import useTimerHook from "../hooks/useTimerHook";
 import RunButton from "./RunButton";
 import TimeZone from "./TimeZone";
 
 function SettingForm() {
-  const {
-    state: { hours, minutes, seconds, submited, formatedTime, timerId },
-  } = useContext(TimerContext) as TimerContextType;
-  const { reset, runInterval, startTimer } = useTimerHook();
-
-  useEffect(() => {
-    if (submited) {
-      runInterval();
-      return () => clearInterval(timerId as number);
-    }
-  }, [hours, minutes, submited, seconds]);
+  const { reset, startTimer } = useTimerHook();
 
   return (
     <div>

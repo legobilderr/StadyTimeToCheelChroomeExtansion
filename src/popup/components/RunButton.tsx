@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { TimerContextType } from "../@types/Timer";
 import TimerContext from "../context/TimerContext";
@@ -6,10 +6,37 @@ import useTimerHook from "../hooks/useTimerHook";
 
 function RunButton() {
   const {
-    state: { hours, minutes, seconds, submited, formatedTime, timerId },
+    state: { submited },
+    dispatch,
   } = useContext(TimerContext) as TimerContextType;
   const { pauseInterval } = useTimerHook();
+  useEffect(() => {
+    chrome.storage.local.get(["paused", "submited"], ({ paused, submited }) => {
+      dispatch({
+        type: "SUBMIT_FORM",
+        payload: {
+          submited: submited,
+          paused: paused,
+        },
+      });
+    });
 
+    const handleStorageChange = (changes: any) => {
+      let { paused, submited } = changes;
+      dispatch({
+        type: "SUBMIT_FORM",
+        payload: {
+          submited: !!submited ? submited.newValue : undefined,
+          paused: !!paused ? paused.newValue : undefined,
+        },
+      });
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
+  }, []);
   return (
     <>
       {submited ? (

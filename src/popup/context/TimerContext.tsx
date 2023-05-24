@@ -15,6 +15,7 @@ export const TimerProvider = ({ children }: PropsWithChildren) => {
     initTimerValue: "",
     paused: false,
   };
+
   const [state, dispatch] = useReducer(timerReduser, timer);
 
   return (

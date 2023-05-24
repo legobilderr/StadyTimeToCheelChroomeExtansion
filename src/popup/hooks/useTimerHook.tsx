@@ -20,60 +20,17 @@ function useTimerHook() {
 
   const startTimer = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (paused) {
-      dispatch({
-        type: "SUBMIT_FORM",
-        payload: {
-          submited: true,
-        },
-      });
-    } else {
-      const formObj: dammy = {};
 
-      var formData = new FormData(e.currentTarget).entries();
-      for (const [key, value] of formData) {
-        formObj[key] = value;
-      }
+    const formObj: dammy = {};
 
-      chrome.runtime.sendMessage({
-        action: "SIBMIT_TIMEMR",
-        inputValue: formObj.timer,
-      });
-
-      let iputhours = Number(formObj.timer.split(":")[0]) || 0;
-      let iputminutes = Number(formObj.timer.split(":")[1]) || 0;
-      let formatedTime = format(
-        new Date(0, 0, 0, iputhours, iputminutes, 59),
-        "HH:mm:ss"
-      );
-      dispatch({
-        type: "SUBMIT_FORM",
-        payload: {
-          submited: true,
-          initTimerValue: formObj.timer,
-        },
-      });
-      dispatch({
-        type: "UPDATE_TIMER",
-        payload: {
-          hours: iputhours,
-          minutes: iputminutes,
-          formatedTime: formatedTime,
-        },
-      });
+    var formData = new FormData(e.currentTarget).entries();
+    for (const [key, value] of formData) {
+      formObj[key] = value;
     }
-  };
 
-  const runInterval = () => {
-    dispatch({
-      type: "RUN_INTERVAL",
-      payload: {
-        formatedTime: format(
-          new Date(0, 0, 0, hours, minutes, seconds),
-          "HH:mm:ss"
-        ),
-        timerId: getTimerId(),
-      },
+    chrome.runtime.sendMessage({
+      action: "SIBMIT_TIMEMR",
+      inputValue: formObj.timer,
     });
   };
 
@@ -127,34 +84,34 @@ function useTimerHook() {
 
   const reset = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (initTimerValue) {
-      const [hours, minutes] = initTimerValue
-        .split(":")
-        .map((item) => Number(item));
-      dispatch({
-        type: "UPDATE_TIMER",
-        payload: {
-          hours: hours,
-          minutes: minutes,
-          seconds: 0,
-          // formatedTime: format(new Date(0, 0, 0, hours, minutes), "HH:mm:ss"),
-        },
-      });
-      clearInterval(timerId as number);
-    }
+    // if (initTimerValue) {
+    //   const [hours, minutes] = initTimerValue
+    //     .split(":")
+    //     .map((item) => Number(item));
+    //   dispatch({
+    //     type: "UPDATE_TIMER",
+    //     payload: {
+    //       hours: hours,
+    //       minutes: minutes,
+    //       seconds: 0,
+    //       // formatedTime: format(new Date(0, 0, 0, hours, minutes), "HH:mm:ss"),
+    //     },
+    //   });
+    //   clearInterval(timerId as number);
+    // }
+    chrome.runtime.sendMessage({
+      action: "RESET_TIMER",
+    });
   };
 
   const pauseInterval = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch({
-      type: "PAUSE_TIMER",
-      payload: {
-        submited: false,
-        paused: true,
-      },
+
+    chrome.runtime.sendMessage({
+      action: "PAUSE_TIMER",
     });
   };
-  return { startTimer, runInterval, reset, pauseInterval };
+  return { startTimer, reset, pauseInterval };
 }
 
 export default useTimerHook;
