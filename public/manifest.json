@@ -21,13 +21,7 @@
     "service_worker": "background.js",
     "type": "module"
   },
-  "content_scripts": [
-    {
-      "matches": ["https://*/*"],
-      "js": ["content.js"]
-    }
-  ],
-  "host_permissions": ["https://*/*"],
+  "host_permissions": ["*://*/*"],
   "action": {
     "default_popup": "index.html",
     "default_icon": "images/icon-32.png"

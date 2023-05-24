@@ -2,10 +2,10 @@ import { FaRedo } from "react-icons/fa";
 import useTimerHook from "../hooks/useTimerHook";
 import RunButton from "./RunButton";
 import TimeZone from "./TimeZone";
+import TimerInput from "./TimerInput";
 
 function SettingForm() {
   const { reset, startTimer } = useTimerHook();
-
   return (
     <div>
       <form className="" onSubmit={startTimer}>
@@ -20,11 +20,7 @@ function SettingForm() {
             </div>
             <p>Each time extension will remind you too rest</p>
             <div className="flex h-11">
-              <input
-                type="time"
-                className="input-bordered w-full max-w-xs  rounded-lg p-2 text-black"
-                name="timer"
-              />
+              <TimerInput />
               <RunButton />
             </div>
           </div>

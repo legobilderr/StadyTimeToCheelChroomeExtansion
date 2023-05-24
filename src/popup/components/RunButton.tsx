@@ -10,6 +10,7 @@ function RunButton() {
     dispatch,
   } = useContext(TimerContext) as TimerContextType;
   const { pauseInterval } = useTimerHook();
+
   useEffect(() => {
     chrome.storage.local.get(["paused", "submited"], ({ paused, submited }) => {
       dispatch({

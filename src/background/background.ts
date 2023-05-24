@@ -12,5 +12,4 @@ chrome.runtime.onMessage.addListener(function (request) {
   if (request.action == "RESET_TIMER") {
     resetTimer();
   }
-  // chrome.alarms.onAlarm.addListener( )
 });

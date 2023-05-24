@@ -9,7 +9,6 @@ function TimeZone() {
   } = useContext(TimerContext) as TimerContextType;
 
   useEffect(() => {
-    // Retrieve initial values from chrome.storage.local
     chrome.storage.local.get(
       ["hours", "minutes", "seconds", "submited"],
       ({ hours, minutes, seconds }) => {

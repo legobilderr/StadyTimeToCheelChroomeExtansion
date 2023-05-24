@@ -2,7 +2,6 @@ import { dammy } from "../popup/@types/Timer";
 
 export const startTimer = (inputValue: string) => {
   const formObj: dammy = {};
-  console.log("SIBMIT_TIMEMR2");
   chrome.storage.local.get(["paused"], (paused) => {
     paused.paused ? afterPauseRunImterval() : firstTimeRunInterval(inputValue);
   });
@@ -11,7 +10,6 @@ export const startTimer = (inputValue: string) => {
 const firstTimeRunInterval = (inputValue: string) => {
   let iputhours = Number(inputValue.split(":")[0]) || 0;
   let iputminutes = Number(inputValue.split(":")[1]) || 0;
-  console.log(iputhours, iputminutes);
 
   chrome.storage.local
     .set({
@@ -21,6 +19,7 @@ const firstTimeRunInterval = (inputValue: string) => {
       submited: true,
       submitTimerValue: inputValue,
       paused: false,
+      timeExpired: false,
     })
     .then(() => {
       getTimerId();
@@ -39,7 +38,6 @@ const afterPauseRunImterval = () => {
 };
 
 const getTimerId = () => {
-  console.log("SIBMIT_TIMEMR3");
   var CurentIntervalId = setInterval(function () {
     chrome.storage.local
       .get(["hours", "minutes", "seconds"])
@@ -56,14 +54,33 @@ const getTimerId = () => {
           });
         } else {
           chrome.storage.local.set({
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
+            submited: false,
+            paused: false,
+            timeExpired: true,
           });
+          runAlert();
           clearInterval(CurentIntervalId as number);
         }
         chrome.storage.local.set({ CurentIntervalId: CurentIntervalId });
       });
   }, 1000);
   return CurentIntervalId;
+};
+
+const runAlert = () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    var activeTab = tabs[0];
+    chrome.scripting.executeScript({
+      target: { tabId: activeTab.id as number },
+      func: () => {
+        chrome.storage.sync.get(["name"]).then((result) => {
+          if (result?.name) {
+            alert(`Time to rest dear ${result.name}`);
+          } else {
+            alert("Time to rest my friend");
+          }
+        });
+      },
+    });
+  });
 };

@@ -7,6 +7,7 @@ export const resetTimer = () => {
     hours: 0,
     minutes: 0,
     seconds: 0,
+    submitTimerValue: "",
   });
   chrome.storage.local.get(["CurentIntervalId"], (CurentIntervalId) => {
     clearInterval(CurentIntervalId.CurentIntervalId);
